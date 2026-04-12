@@ -19,6 +19,9 @@ env:
   TELEGRAM_TO_ID: ${{ secrets.TELEGRAM_TO_ID }}
 
 jobs:
+  # ─────────────────────────────────────
+  # 1️⃣ Тестирование кода
+  # ─────────────────────────────────────
   test:
     runs-on: ubuntu-latest
     services:
@@ -72,6 +75,9 @@ jobs:
           DB_HOST: localhost
           DB_PORT: 5432
 
+  # ─────────────────────────────────────
+  # 2️⃣ Сборка и отправка образов на Docker Hub
+  # ─────────────────────────────────────
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
@@ -103,6 +109,9 @@ jobs:
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/kittygram_gateway:latest
 
+  # ─────────────────────────────────────
+  # 3️⃣ Деплой на удалённый сервер
+  # ─────────────────────────────────────
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
@@ -130,10 +139,15 @@ jobs:
             echo "DB_HOST=db" >> .env
             echo "DB_PORT=5432" >> .env
             echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+            echo "DEBUG=0" >> .env
+            echo "ALLOWED_HOSTS=*" >> .env
             docker-compose -f docker-compose.production.yml pull
             docker-compose -f docker-compose.production.yml up -d
             docker-compose -f docker-compose.production.yml run backend python manage.py migrate
 
+  # ─────────────────────────────────────
+  # 4️⃣ Пост-деплой тесты на сервере
+  # ─────────────────────────────────────
   post-deploy-test:
     needs: deploy
     runs-on: ubuntu-latest
@@ -149,6 +163,9 @@ jobs:
         env:
           KITTYGRAM_URL: ${{ secrets.KITTYGRAM_URL }}
 
+  # ─────────────────────────────────────
+  # 5️⃣ Уведомление в Telegram
+  # ─────────────────────────────────────
   notify:
     needs: post-deploy-test
     runs-on: ubuntu-latest
@@ -158,4 +175,4 @@ jobs:
         run: |
           curl -X POST https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/sendMessage \
             -d chat_id=${{ env.TELEGRAM_TO_ID }} \
-            -d text="✅ Kittygram успешно задеплоен!\\n\\n🔗 Проект доступен: ${{ secrets.KITTYGRAM_URL }}"е 
+            -d text="✅ Kittygram успешно задеплоен!\\n\\n🔗 Проект доступен: ${{ secrets.KITTYGRAM_URL }}"
