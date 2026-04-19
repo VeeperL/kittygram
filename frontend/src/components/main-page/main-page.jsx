@@ -1,11 +1,12 @@
 import React from "react";
-
 import { getCards } from "../../utils/api";
-
-import { MainCard } from "../main-card/main-card";
-import { PaginationBox } from "../pagination-box/pagination-box";
-
+import { MainCard } from "../components/main-card/main-card"; // Проверь путь! Возможно '../main-card/main-card'
+import { PaginationBox } from "../components/pagination-box/pagination-box"; // Проверь путь!
 import styles from "./main-page.module.css";
+
+// Если у тебя структура папок другая, поправь импорты выше на:
+// import { MainCard } from "../main-card/main-card";
+// import { PaginationBox } from "../pagination-box/pagination-box";
 
 export const MainPage = ({ queryPage, setQueryPage, extraClass = "" }) => {
   const [cards, setCards] = React.useState([]);
@@ -42,9 +43,7 @@ export const MainPage = ({ queryPage, setQueryPage, extraClass = "" }) => {
 
   return (
     <section className={`${styles.content} ${extraClass}`}>
-      <h2
-        className={`text text_type_h2 text_color_primary mt-25 mb-20 ${styles.title}`}
-      >
+      <h2 className={`text text_type_h2 text_color_primary mt-25 mb-20 ${styles.title}`}>
         Замечательные коты
       </h2>
       <div className={styles.box}>
@@ -61,6 +60,7 @@ export const MainPage = ({ queryPage, setQueryPage, extraClass = "" }) => {
           );
         })}
       </div>
+
       {pagData.count > 10 && (
         <PaginationBox
           data={pagData}

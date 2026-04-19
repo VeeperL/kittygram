@@ -1,8 +1,6 @@
 import React from "react";
-
 import arrowLeftIcon from "../../images/arrow-left.svg";
 import arrowRightIcon from "../../images/arrow-right.svg";
-
 import styles from "./pagination-box.module.css";
 
 export const PaginationBox = ({
@@ -69,7 +67,6 @@ export const PaginationBox = ({
         res.push(data.pages);
       }
     }
-
     setButtons(res);
   }, [data, queryPage]);
 
@@ -89,7 +86,6 @@ export const PaginationBox = ({
           const textWeight = isActive ? 600 : 500;
           const textColor = isActive ? "primary" : "additional";
           const btnName = item !== "..." ? item : "";
-
           return (
             <button
               key={index}

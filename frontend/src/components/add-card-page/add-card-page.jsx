@@ -1,18 +1,14 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-
 import { sendCard } from "../../utils/api";
 import { colorsList, getBase64 } from "../../utils/constants";
-
 import returnIcon from "../../images/left.svg";
 import addImgIcon from "../../images/image.svg";
-
 import { ButtonForm } from "../ui/button-form/button-form";
 import { Select } from "../ui/select/select";
 import { ButtonSecondary } from "../ui/button-secondary/button-secondary";
 import { Input } from "../ui/input/input";
 import { ColorsBox } from "../ui/colors-box/colors-box";
-
 import styles from "./add-card-page.module.css";
 
 export const AddCardPage = ({ extraClass = "" }) => {
