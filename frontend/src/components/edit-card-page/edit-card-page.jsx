@@ -19,7 +19,6 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
   const [currentFileName, setCurrentFileName] = React.useState("");
   const [errorName, setErrorName] = React.useState("");
   const [errorAge, setErrorAge] = React.useState("");
-
   const history = useHistory();
 
   React.useEffect(() => {
@@ -66,7 +65,6 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
 
     const totalCard = {};
     const photo = document.querySelector('input[type="file"]').files[0];
-    
     if (data.name !== card.name) {
       totalCard["name"] = card.name;
     }
@@ -79,9 +77,7 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
     if (data.image !== card.image && card.image === null) {
       totalCard["image"] = card.image;
     }
-    if (
-      JSON.stringify(data.achievements) !== JSON.stringify(card.achievements)
-    ) {
+    if (JSON.stringify(data.achievements) !== JSON.stringify(card.achievements)) {
       totalCard["achievements"] = card.achievements;
     }
 
@@ -133,15 +129,9 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
           </div>
         ) : (
           <label htmlFor="image" className={styles.img_box}>
-            <img
-              className={styles.img}
-              src={addImgIcon}
-              alt="Добавить фото котика."
-            />
+            <img className={styles.img} src={addImgIcon} alt="Добавить фото котика." />
             <p className="text text_type_medium-16 text_color_primary">
-              {currentFileName
-                ? currentFileName
-                : "Загрузите фото в формате JPG"}
+              {currentFileName ? currentFileName : "Загрузите фото в формате JPG"}
             </p>
           </label>
         )}

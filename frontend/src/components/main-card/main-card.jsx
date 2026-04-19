@@ -37,10 +37,7 @@ export const MainCard = ({
             {date}
           </p>
         </div>
-        <div
-          className={styles.cat_color_box}
-          style={{ backgroundColor: color }}
-        >
+        <div className={styles.cat_color_box} style={{ backgroundColor: color }}>
           <p className={`text text_type_medium-20 text_color_${colorText} ${styles.cat_color}`}>
             {color}
           </p>

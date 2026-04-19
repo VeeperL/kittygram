@@ -13,7 +13,6 @@ import styles from "./card-page.module.css";
 export const CardPage = ({ data, setData, extraClass = "" }) => {
   const [achievements, setAchievements] = React.useState("");
   const [user] = React.useContext(UserContext);
-
   const history = useHistory();
   const params = useParams();
 
@@ -114,10 +113,7 @@ export const CardPage = ({ data, setData, extraClass = "" }) => {
       <p className={`text text_type_h3 text_color_secondary ${styles.date}`}>
         {data.birth_year}
       </p>
-      <div
-        className={styles.cat_color_box}
-        style={{ backgroundColor: data.color }}
-      >
+      <div className={styles.cat_color_box} style={{ backgroundColor: data.color }}>
         <p className={`text text_type_medium-20 text_color_${colorText} ${styles.cat_color}`}>
           {data.color}
         </p>
