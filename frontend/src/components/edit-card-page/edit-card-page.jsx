@@ -65,25 +65,35 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
 
     const totalCard = {};
     const photo = document.querySelector('input[type="file"]').files[0];
+
     if (data.name !== card.name) {
-      totalCard["name"] = card.name;
+      totalCard.name = card.name;
     }
     if (data.color !== card.color) {
-      totalCard["color"] = card.color;
+      totalCard.color = card.color;
     }
     if (data.birth_year !== card.birth_year) {
-      totalCard["birth_year"] = card.birth_year;
+      totalCard.birth_year = card.birth_year;
     }
-    if (data.image !== card.image && card.image === null) {
-      totalCard["image"] = card.image;
+    // Исправление: не отправляем null, если картинку удалили. 
+    // Если нужно удалить, лучше отправить пустую строку или поле вообще не включать, 
+    // но для безопасности оставим логику только если есть фото.
+    if (photo) {
+      // Если загружаем новое фото, оно обработается ниже
+    } else if (data.image && card.image === null) {
+       // Если было фото, а стало null (удалили) - отправляем пустую строку, чтобы бэкенд понял
+       totalCard.image = ""; 
     }
-    if (JSON.stringify(data.achievements) !== JSON.stringify(card.achievements)) {
-      totalCard["achievements"] = card.achievements;
+    
+    if (
+      JSON.stringify(data.achievements) !== JSON.stringify(card.achievements)
+    ) {
+      totalCard.achievements = card.achievements;
     }
 
     if (photo) {
-      getBase64(photo).then((data) => {
-        totalCard["image"] = data;
+      getBase64(photo).then((base64Data) => {
+        totalCard.image = base64Data;
         updateCard(totalCard, card.id)
           .then((res) => {
             if (res && res.id) {
@@ -93,13 +103,19 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
           .catch(handleResponse);
       });
     } else {
-      updateCard(totalCard, card.id)
-        .then((res) => {
-          if (res && res.id) {
-            history.replace({ pathname: `/cats/${res.id}` });
-          }
-        })
-        .catch(handleResponse);
+      // Отправляем только если есть изменения
+      if (Object.keys(totalCard).length > 0) {
+        updateCard(totalCard, card.id)
+          .then((res) => {
+            if (res && res.id) {
+              history.replace({ pathname: `/cats/${res.id}` });
+            }
+          })
+          .catch(handleResponse);
+      } else {
+         // Если изменений нет, просто возвращаемся
+         history.replace({ pathname: `/cats/${card.id}` });
+      }
     }
   };
 
@@ -129,9 +145,15 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
           </div>
         ) : (
           <label htmlFor="image" className={styles.img_box}>
-            <img className={styles.img} src={addImgIcon} alt="Добавить фото котика." />
+            <img
+              className={styles.img}
+              src={addImgIcon}
+              alt="Добавить фото котика."
+            />
             <p className="text text_type_medium-16 text_color_primary">
-              {currentFileName ? currentFileName : "Загрузите фото в формате JPG"}
+              {currentFileName
+                ? currentFileName
+                : "Загрузите фото в формате JPG"}
             </p>
           </label>
         )}
