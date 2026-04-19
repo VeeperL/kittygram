@@ -134,7 +134,7 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
           <div className={styles.img_box}>
             <img
               className={styles.current_img}
-              src={`http://158.160.241.138:8000${card.image}`}
+              src={card.image ? card.image.replace('158.160.241.138/', '158.160.241.138:8000/') : addImgIcon}
               alt="Фото котика."
             />
             <ButtonSecondary
