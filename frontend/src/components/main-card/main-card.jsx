@@ -26,7 +26,7 @@ export const MainCard = ({
       <Link className={styles.link} to={`/cats/${cardId}`}>
         <img
           className={styles.img}
-          src={img || defaultImg}
+          src={img ? `http://158.160.241.138:8000${img}` : defaultImg}
           alt="Фото котика."
         />
       </Link>
