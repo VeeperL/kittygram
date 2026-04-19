@@ -24,15 +24,11 @@ export const MainCard = ({
   return (
     <article className={`${styles.content} ${extraClass}`}>
       <Link className={styles.link} to={`/cats/${cardId}`}>
-          <Link className={styles.link} to={`/cats/${cardId}`}>
-        <Link className={styles.link} to={`/cats/${cardId}`}>
         <img
           className={styles.img}
-          src={img ? `/media/${img}` : defaultImg}
+          src={img || defaultImg}
           alt="Фото котика."
         />
-      </Link>
-      </Link>
       </Link>
       <div className={styles.data_box}>
         <div className={styles.name_n_date_box}>
