@@ -1,19 +1,15 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-
 import { updateCard } from "../../utils/api";
 import { colorsList, getBase64, colorsNames } from "../../utils/constants";
-
 import returnIcon from "../../images/left.svg";
 import addImgIcon from "../../images/image.svg";
 import removeIcon from "../../images/trash.svg";
-
 import { ButtonSecondary } from "../ui/button-secondary/button-secondary";
 import { Input } from "../ui/input/input";
 import { ButtonForm } from "../ui/button-form/button-form";
 import { Select } from "../ui/select/select";
 import { ColorsBox } from "../ui/colors-box/colors-box";
-
 import styles from "./edit-card-page.module.css";
 
 export const EditCardPage = ({ data, setData, extraClass = "" }) => {
@@ -70,6 +66,7 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
 
     const totalCard = {};
     const photo = document.querySelector('input[type="file"]').files[0];
+    
     if (data.name !== card.name) {
       totalCard["name"] = card.name;
     }

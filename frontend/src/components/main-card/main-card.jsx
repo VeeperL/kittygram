@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import defaultImg from "../../images/default-kitty.jpg";
-
 import styles from "./main-card.module.css";
 
 export const MainCard = ({
@@ -32,14 +30,10 @@ export const MainCard = ({
       </Link>
       <div className={styles.data_box}>
         <div className={styles.name_n_date_box}>
-          <p
-            className={`text text_type_h3 text_color_primary mt-8 mb-3 ${styles.name}`}
-          >
+          <p className={`text text_type_h3 text_color_primary mt-8 mb-3 ${styles.name}`}>
             {name}
           </p>
-          <p
-            className={`text text_type_medium-20 text_color_secondary mb-8 ${styles.date}`}
-          >
+          <p className={`text text_type_medium-20 text_color_secondary mb-8 ${styles.date}`}>
             {date}
           </p>
         </div>
@@ -47,9 +41,7 @@ export const MainCard = ({
           className={styles.cat_color_box}
           style={{ backgroundColor: color }}
         >
-          <p
-            className={`text text_type_medium-20 text_color_${colorText} ${styles.cat_color}`}
-          >
+          <p className={`text text_type_medium-20 text_color_${colorText} ${styles.cat_color}`}>
             {color}
           </p>
         </div>

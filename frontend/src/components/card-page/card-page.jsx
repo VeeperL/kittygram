@@ -1,17 +1,13 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-
 import { deleteCard, getCard } from "../../utils/api";
 import { UserContext } from "../../utils/context";
-
 import returnIcon from "../../images/left.svg";
 import editIcon from "../../images/edit.svg";
 import defaultImg from "../../images/default-kitty.jpg";
 import removeIcon from "../../images/trash.svg";
-
 import { ButtonSecondary } from "../ui/button-secondary/button-secondary";
 import { ButtonHeader } from "../ui/button-header/button-header";
-
 import styles from "./card-page.module.css";
 
 export const CardPage = ({ data, setData, extraClass = "" }) => {
@@ -25,7 +21,6 @@ export const CardPage = ({ data, setData, extraClass = "" }) => {
     getCard(params.id).then((res) => {
       if (res && res.id) {
         setData(res);
-
         let resString = "";
         res.achievements.forEach((item) => {
           resString
@@ -113,9 +108,7 @@ export const CardPage = ({ data, setData, extraClass = "" }) => {
           </>
         )}
       </div>
-      <p
-        className={`text text_type_h2-5 text_color_primary mt-35 mb-10 ${styles.name}`}
-      >
+      <p className={`text text_type_h2-5 text_color_primary mt-35 mb-10 ${styles.name}`}>
         {data.name}
       </p>
       <p className={`text text_type_h3 text_color_secondary ${styles.date}`}>
@@ -125,9 +118,7 @@ export const CardPage = ({ data, setData, extraClass = "" }) => {
         className={styles.cat_color_box}
         style={{ backgroundColor: data.color }}
       >
-        <p
-          className={`text text_type_medium-20 text_color_${colorText} ${styles.cat_color}`}
-        >
+        <p className={`text text_type_medium-20 text_color_${colorText} ${styles.cat_color}`}>
           {data.color}
         </p>
       </div>
