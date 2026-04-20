@@ -117,7 +117,7 @@ jobs:
           pip install pytest requests
       - name: Run post-deploy tests
         env:
-          BASE_URL: http://${{ secrets.HOST }}
+          BASE_URL: http://${{ secrets.HOST }}:8000
         run: |
           pytest tests/ -v
 
