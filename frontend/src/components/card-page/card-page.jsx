@@ -82,9 +82,9 @@ export const CardPage = ({ data, setData, extraClass = "" }) => {
         </div>
         <div className={styles.img_box}>
           <img
-          className={styles.img}
-  src={data.image ? data.image.replace('158.160.241.138/', '158.160.241.138:8000/') : defaultImg}
-  alt="Фото котика."
+            className={styles.img}
+            src={data.image ? data.image.replace('158.160.241.138/', '158.160.241.138:8000/') : defaultImg}
+            alt="Фото котика."
           />
         </div>
         <ButtonSecondary

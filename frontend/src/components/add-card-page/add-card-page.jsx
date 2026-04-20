@@ -20,7 +20,6 @@ export const AddCardPage = ({ extraClass = "" }) => {
   });
   const [errorName, setErrorName] = React.useState("");
   const [errorAge, setErrorAge] = React.useState("");
-
   const history = useHistory();
 
   const handleReturn = () => {
@@ -70,9 +69,7 @@ export const AddCardPage = ({ extraClass = "" }) => {
 
   return (
     <div className={`${styles.content} ${extraClass}`}>
-      <h2 className="text text_type_h2 text_color_primary mt-25 mb-9">
-        Новый кот
-      </h2>
+      <h2 className="text text_type_h2 text_color_primary mt-25 mb-9">Новый кот</h2>
       <ButtonSecondary
         extraClass={styles.return_btn_mobile}
         icon={returnIcon}
@@ -80,15 +77,9 @@ export const AddCardPage = ({ extraClass = "" }) => {
       />
       <div className={styles.container}>
         <label htmlFor="image" className={styles.img_box}>
-          <img
-            className={styles.img}
-            src={addImgIcon}
-            alt="Добавить фото котика."
-          />
+          <img className={styles.img} src={addImgIcon} alt="Добавить фото котика." />
           <p className="text text_type_medium-16 text_color_primary">
-            {currentFileName
-              ? currentFileName
-              : "Загрузите фото в формате JPG"}
+            {currentFileName ? currentFileName : "Загрузите фото в формате JPG"}
           </p>
         </label>
         <input

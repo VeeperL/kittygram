@@ -5,6 +5,7 @@ import { colorsList, getBase64, colorsNames } from "../../utils/constants";
 import returnIcon from "../../images/left.svg";
 import addImgIcon from "../../images/image.svg";
 import removeIcon from "../../images/trash.svg";
+import defaultImg from "../../images/default-kitty.jpg";
 import { ButtonSecondary } from "../ui/button-secondary/button-secondary";
 import { Input } from "../ui/input/input";
 import { ButtonForm } from "../ui/button-form/button-form";
@@ -66,57 +67,45 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
     const totalCard = {};
     const photo = document.querySelector('input[type="file"]').files[0];
 
-    if (data.name !== card.name) {
-      totalCard.name = card.name;
-    }
-    if (data.color !== card.color) {
-      totalCard.color = card.color;
-    }
-    if (data.birth_year !== card.birth_year) {
-      totalCard.birth_year = card.birth_year;
-    }
-    // Исправление: не отправляем null, если картинку удалили. 
-    // Если нужно удалить, лучше отправить пустую строку или поле вообще не включать, 
-    // но для безопасности оставим логику только если есть фото.
-    if (photo) {
-      // Если загружаем новое фото, оно обработается ниже
-    } else if (data.image && card.image === null) {
-       // Если было фото, а стало null (удалили) - отправляем пустую строку, чтобы бэкенд понял
-       totalCard.image = ""; 
+    if (data.name !== card.name) totalCard.name = card.name;
+    if (data.color !== card.color) totalCard.color = card.color;
+    if (data.birth_year !== card.birth_year) totalCard.birth_year = card.birth_year;
+    
+    if (data.image && card.image === null) {
+      totalCard.image = "";
     }
     
-    if (
-      JSON.stringify(data.achievements) !== JSON.stringify(card.achievements)
-    ) {
+    if (JSON.stringify(data.achievements) !== JSON.stringify(card.achievements)) {
       totalCard.achievements = card.achievements;
     }
 
-    if (photo) {
-      getBase64(photo).then((base64Data) => {
-        totalCard.image = base64Data;
-        updateCard(totalCard, card.id)
-          .then((res) => {
-            if (res && res.id) {
-              history.replace({ pathname: `/cats/${res.id}` });
-            }
-          })
-          .catch(handleResponse);
-      });
-    } else {
-      // Отправляем только если есть изменения
-      if (Object.keys(totalCard).length > 0) {
-        updateCard(totalCard, card.id)
-          .then((res) => {
-            if (res && res.id) {
-              history.replace({ pathname: `/cats/${res.id}` });
-            }
-          })
-          .catch(handleResponse);
-      } else {
-         // Если изменений нет, просто возвращаемся
-         history.replace({ pathname: `/cats/${card.id}` });
+    const sendRequest = () => {
+      if (Object.keys(totalCard).length === 0 && !photo) {
+        history.replace({ pathname: `/cats/${data.id}` });
+        return;
       }
-    }
+
+      const finishUpdate = () => {
+        updateCard(totalCard, card.id)
+          .then((res) => {
+            if (res && res.id) {
+              history.replace({ pathname: `/cats/${res.id}` });
+            }
+          })
+          .catch(handleResponse);
+      };
+
+      if (photo) {
+        getBase64(photo).then((base64Data) => {
+          totalCard.image = base64Data;
+          finishUpdate();
+        });
+      } else {
+        finishUpdate();
+      }
+    };
+
+    sendRequest();
   };
 
   return (
@@ -134,7 +123,7 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
           <div className={styles.img_box}>
             <img
               className={styles.current_img}
-              src={card.image ? card.image.replace('158.160.241.138/', '158.160.241.138:8000/') : addImgIcon}
+              src={card.image.replace('158.160.241.138/', '158.160.241.138:8000/')}
               alt="Фото котика."
             />
             <ButtonSecondary
@@ -145,15 +134,9 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
           </div>
         ) : (
           <label htmlFor="image" className={styles.img_box}>
-            <img
-              className={styles.img}
-              src={addImgIcon}
-              alt="Добавить фото котика."
-            />
+            <img className={styles.img} src={addImgIcon} alt="Добавить фото котика." />
             <p className="text text_type_medium-16 text_color_primary">
-              {currentFileName
-                ? currentFileName
-                : "Загрузите фото в формате JPG"}
+              {currentFileName ? currentFileName : "Загрузите фото в формате JPG"}
             </p>
           </label>
         )}

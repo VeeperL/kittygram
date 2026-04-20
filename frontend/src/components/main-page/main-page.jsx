@@ -43,18 +43,16 @@ export const MainPage = ({ queryPage, setQueryPage, extraClass = "" }) => {
         Замечательные коты
       </h2>
       <div className={styles.box}>
-        {cards.map((item, index) => {
-          return (
-            <MainCard
-              cardId={item.id}
-              key={index}
-              img={item.image}
-              name={item.name}
-              date={item.birth_year}
-              color={item.color}
-            />
-          );
-        })}
+        {cards.map((item, index) => (
+          <MainCard
+            cardId={item.id}
+            key={index}
+            img={item.image}
+            name={item.name}
+            date={item.birth_year}
+            color={item.color}
+          />
+        ))}
       </div>
       {pagData.count > 10 && (
         <PaginationBox
