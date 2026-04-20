@@ -34,7 +34,7 @@ services:
   gateway:
     image: veeper/kittygram_gateway:latest
     ports:
-      - "8000:80"
+      - "80:80"
     volumes:
       - static:/staticfiles
       - media:/media_files
