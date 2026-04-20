@@ -26,21 +26,15 @@ services:
              python manage.py collectstatic --noinput &&
              gunicorn --bind 0.0.0.0:8000 kittygram_backend.wsgi"
 
-  frontend:
-    image: veeper/kittygram_frontend:latest
-    volumes:
-      - static:/app/frontend_build
-
   gateway:
     image: veeper/kittygram_gateway:latest
     ports:
-      - "8000:80"
+      - "80:80"  # <--- ИЗМЕНИЛИ! Теперь сайт будет на 80 порту (стандартный)
     volumes:
       - static:/staticfiles
       - media:/media_files
     depends_on:
       - backend
-      - frontend
 
 volumes:
   static:
