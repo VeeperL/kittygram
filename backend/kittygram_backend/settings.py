@@ -1,26 +1,20 @@
 import os
 from pathlib import Path
+from django.core.management.utils import get_random_secret_key
 
-from django.core.management.utils import get_random_secret_key  
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
+
 DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
+
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
-
-DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
-
-DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
-
-STATIC_ROOT = "/app/collected_static"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -65,7 +59,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kittygram_backend.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -76,10 +69,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -106,13 +95,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
@@ -126,5 +108,4 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-
 }
